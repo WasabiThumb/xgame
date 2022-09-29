@@ -1,5 +1,6 @@
 # XGame
-A minigame plugin for Spigot 1.8 - 1.19 created using [XPlug](https://github.com/WasabiThumb/xplug), a LUA platform
+A minigame plugin for Spigot 1.8 - 1.19 created using [XPlug](https://github.com/WasabiThumb/xplug), a LUA platform\
+XPlug must also be installed to use XGame
 
 ## Minigames
 - Free-for-all
