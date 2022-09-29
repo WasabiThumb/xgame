@@ -20,7 +20,7 @@ function MG:Start()
             if (i == 5) then
                 self.StartTime = os.time()
                 self.Started = true
-                for _,v in ipairs(self:GetPlayers()) do
+                for _,v in pairs(self:GetPlayers()) do
                     local inv = v:GetInventory()
                     inv:SetItem(0, ItemStack(Material("IRON_SWORD"), 1))
                     inv:SetItem(1, ItemStack(Material("BOW"), 1))
@@ -38,7 +38,7 @@ function MG:Start()
                 end
                 self:BroadcastSound("ENTITY_ENDER_DRAGON_GROWL", "ENTITY_ENDERDRAGON_GROWL", "ENDERDRAGON_GROWL")
             else
-                for _,v in ipairs(self:GetPlayers()) do
+                for _,v in pairs(self:GetPlayers()) do
                     v:ShowTitle("<bold><gold>" .. (5 - i) .. "</gold></bold>", "")
                 end
                 self:BroadcastSound("BLOCK_BELL_USE", "BLOCK_NOTE_BLOCK_BASS", "BLOCK_NOTE_BASS", "NOTE_BASS")
@@ -53,7 +53,7 @@ function MG:Tick()
     if (self.SuddenDeath) then
         local airMat = Material("AIR")
         local lavaMat = Material("LAVA")
-        for _,ply in ipairs(self:GetPlayers()) do
+        for _,ply in pairs(self:GetPlayers()) do
             if (ply:GetGameMode() == GM_SPECTATOR) then
                 goto continue
             end
@@ -89,7 +89,7 @@ function MG:Tick()
         local now = os.time()
         local elapsed = math.abs(os.difftime(self.StartTime, now))
         if (elapsed > 300) then
-            for _,ply in ipairs(self:GetPlayers()) do
+            for _,ply in pairs(self:GetPlayers()) do
                 ply:ShowTitle("<dark_red>SUDDEN</dark_red>", "<red>DEATH</red>")
                 ply:SendMessage("<red>* Nobody has won within 5 minutes, so sudden death has begun!</red>")
             end
@@ -134,10 +134,10 @@ function MG:OnDeath(ply)
     end )
     if (thenEnd) then
         local map = {}
-        for _,uuid in ipairs(self.Deaths) do
+        for _,uuid in pairs(self.Deaths) do
             map[uuid] = true
         end
-        for _,p in ipairs(self:GetPlayers()) do
+        for _,p in pairs(self:GetPlayers()) do
             if (not (map[p:GetUUID()])) then
                 table.insert(self.Deaths, ply:GetUUID())
                 timer.Simple(0, function()
@@ -155,7 +155,7 @@ function MG:EndRoutine()
     self.SuddenDeath = false
     self.Started = false
     local byUUID = {}
-    for _,ply in ipairs(self:GetPlayers()) do
+    for _,ply in pairs(self:GetPlayers()) do
         ply:ShowTitle("<green>Game Over!</green>", "")
         ply:SetGameMode(GM_SPECTATOR)
         ply:SendMessage("<gradient:yellow:gold:yellow>======================</gradient>")
@@ -168,7 +168,7 @@ function MG:EndRoutine()
         place = place + 1
         local p = byUUID[uuid]
         if (p == nil) then
-            for _,q in ipairs(server.GetPlayers()) do
+            for _,q in pairs(server.GetPlayers()) do
                 if (q:GetUUID() == uuid) then
                     p = q
                     break

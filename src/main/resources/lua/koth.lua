@@ -27,7 +27,7 @@ function MG:Start()
         bar:SetProgress(1)
         self.EndBar = bar
         self.StartTime = os.time()
-        for _,ply in ipairs(self:GetPlayers()) do
+        for _,ply in pairs(self:GetPlayers()) do
             ply:SendMessage("<green>* The game has started!</green>")
             self:Loadout(ply)
         end
@@ -58,7 +58,7 @@ function MG:Tick()
         self.EndBar:SetProgress(math.min(pc, 1))
     end
     local origin = self:GetSchematicPos():ToVector()
-    for _,ply in ipairs(self:GetPlayers()) do
+    for _,ply in pairs(self:GetPlayers()) do
         if (ply:GetGameMode() == GM_SPECTATOR) then return end
         local pos = ply:GetPos():ToVector()
         local dist = pos:DistanceSqr(origin)
@@ -212,7 +212,7 @@ function MG:OnInteract(ply, item, leftClick, _)
                 self:BroadcastSound("BLOCK_DISPENSER_FAIL", "WOOD_CLICK")
             else
                 local locVec = loc:ToVector()
-                for _,p in ipairs(world:GetNearbyPlayers("PLAYER", loc, 6)) do
+                for _,p in pairs(world:GetNearbyPlayers("PLAYER", loc, 6)) do
                     local pLoc = p:GetPos()
                     local pLocVec = pLoc:ToVector()
                     local mag = math.min(math.max(12 / locVec:Distance(pLocVec), 1), 12)
@@ -291,7 +291,7 @@ end
 function MG:GetWinner()
     local uuid = self:GetWinnerUUID()
     if (uuid == nil) then return nil end
-    for _,ply in ipairs(self:GetPlayers()) do
+    for _,ply in pairs(self:GetPlayers()) do
         if (ply:GetUUID() == uuid) then return ply end
     end
     return nil
@@ -299,7 +299,7 @@ end
 
 function MG:RoundOverRoutine()
     self.Started = false
-    for _,ply in ipairs(self:GetPlayers()) do
+    for _,ply in pairs(self:GetPlayers()) do
         ply:SetGameMode(GM_SPECTATOR)
         ply:SendMessage("<red>Round Over!</red>")
     end
@@ -308,7 +308,7 @@ function MG:RoundOverRoutine()
     local keys = {}
     for uuid,time in pairs(self.CaptureTimes) do
         local ply
-        for _,p in ipairs(self:GetPlayers()) do
+        for _,p in pairs(self:GetPlayers()) do
             if (p:GetUUID() == uuid) then
                 ply = p
                 break
@@ -334,7 +334,7 @@ function MG:RoundOverRoutine()
         return
     end
     local delay = 3
-    for place,score in ipairs(keys) do
+    for place,score in pairs(keys) do
         if (place > 3) then break end
         local step = math.max(score / 25, 1)
         local reps = math.ceil(score / step)
@@ -346,7 +346,7 @@ function MG:RoundOverRoutine()
                 fv = math.floor(fv)
             end
             timer.Simple(delay, function()
-                for _,ply in ipairs(self:GetPlayers()) do
+                for _,ply in pairs(self:GetPlayers()) do
                     ply:SendActionBar("<gold>" .. fv .. "</gold>")
                 end
                 self:BroadcastSound("BLOCK_NOTE_BLOCK_PLING", "BLOCK_NOTE_PLING", "NOTE_PLING")
@@ -354,7 +354,7 @@ function MG:RoundOverRoutine()
             delay = delay + ((rep / reps) * (0.35)) + 0.05
         end
         timer.Simple(delay, function()
-            for _,player in ipairs(scores[score]) do
+            for _,player in pairs(scores[score]) do
                 local nm = player:GetDisplayName()
                 if (nm == nil) then nm = player:GetName() end
                 self:Broadcast("<b><dark_aqua>" .. place .. "</dark_aqua></b>. <b><aqua>" .. nm .. "</aqua></b> (<gold>" .. score .. "</gold>)")

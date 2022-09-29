@@ -39,7 +39,7 @@ function MG:Start()
     self.NumRounds = count
     self.Slots = {}
     local head = 1
-    for _,ply in ipairs(players) do
+    for _,ply in pairs(players) do
         self.Slots[head] = ply:GetUUID()
         head = head + 1
     end
@@ -135,7 +135,7 @@ function MG:OnChat(ply, msg)
             ply:SendMessage("<gold>* Submitted prompt: <white>" .. msg .. "</white></gold>")
             self.Prompts[self:GetPlayerIndex(ply)] = msg
             local all = true
-            for _,v in ipairs(self:GetPlayers()) do
+            for _,v in pairs(self:GetPlayers()) do
                 if (self.Prompts[self:GetPlayerIndex(v)] == nil) then
                     all = false
                     break
@@ -161,7 +161,7 @@ function MG:OnChat(ply, msg)
                 self.BuildReady[uuid] = true
                 ply:SendMessage("<green>* Done! Use <white>!done</white> again to set your build as <red>Not done</red></green>")
                 local all = true
-                for _,p in ipairs(self:GetPlayers()) do
+                for _,p in pairs(self:GetPlayers()) do
                     if (not (self.BuildReady[p:GetUUID()] or false)) then
                         all = false
                         break
@@ -203,7 +203,7 @@ function MG:RoundStep()
         if (guess) then
             msg = "<gold>* Enter a guess for the build in chat</gold>"
         end
-        for _,ply in ipairs(players) do
+        for _,ply in pairs(players) do
             ply:TeleportAsync(self:GetSpawn(ply))
             ply:SetGameMode(GM_SPECTATOR)
             ply:SendMessage(msg)
@@ -214,7 +214,7 @@ function MG:RoundStep()
             if (self.Round >= self.NumRounds) then
                 local players = self:GetPlayers()
                 local pmts = {}
-                for _,ply in ipairs(players) do
+                for _,ply in pairs(players) do
                     local idx = self:GetPlayerIndex(ply)
                     local prompt = self.Prompts[idx]
                     if (prompt == nil) then
@@ -238,7 +238,7 @@ function MG:RoundStep()
         self.CurBar = bb
         self.Building = true
         local pmts = {}
-        for _,ply in ipairs(players) do
+        for _,ply in pairs(players) do
             ply:SetGameMode(GM_CREATIVE)
             ply:TeleportAsync(self:GetSpawn(ply))
             local idx = self:GetPlayerIndex(ply)
@@ -259,7 +259,7 @@ function MG:FinalRound()
     self.IsEnding = true
     local ct = self.NumRounds
     local players = self:GetPlayers()
-    for _,ply in ipairs(players) do
+    for _,ply in pairs(players) do
         ply:SendMessage("<green>* Game over! Showcasing builds in 10 seconds...</green>")
         ply:SetGameMode(GM_SPECTATOR)
     end
@@ -276,7 +276,7 @@ function MG:FinalRound()
                 self.IsShowcasing = true
                 self.ShowcaseSlot = fx
                 self.Round = fz
-                for _,ply in ipairs(players) do
+                for _,ply in pairs(players) do
                     ply:TeleportAsync(self:GetSpawnAtIndex(fx, fz))
                 end
                 self:Broadcast("<gold>= Round " .. fz .. " =</gold>")

@@ -13,7 +13,7 @@ public final class Externals {
         try {
             WORLDEDIT = new codes.wasabi.xgame.ext.worldedit.basic.BasicWorldEditInterface();
             HAS_WORLDEDIT = true;
-        } catch (Exception ignored) { }
+        } catch (Throwable ignored) { }
     }
 
     public static boolean hasWorldEditInterface() {

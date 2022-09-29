@@ -17,7 +17,7 @@ function MG:Start()
 end
 
 function MG:Tick()
-    for _,ply in ipairs(self:GetPlayers()) do
+    for _,ply in pairs(self:GetPlayers()) do
         particle.Start("REDSTONE", ply:GetPos())
         particle.SetOffset(0, 0, 0)
         particle.SetColor(255, 0, 255)

@@ -55,6 +55,14 @@ public class LuaMinigameInstance extends MinigameInstance {
         throw new IllegalStateException("Failed to create new globals");
     }
 
+    private static LuaTable fromArray(LuaValue[] values) {
+        LuaTable ret = LuaValue.tableOf();
+        for (int i=0; i < values.length; i++) {
+            ret.set(i + 1, values[i]);
+        }
+        return ret;
+    }
+
     private final LuaValue struct;
     public LuaMinigameInstance(String code) {
         LuaSandbox sandbox = XGame.getSandbox();
@@ -89,7 +97,7 @@ public class LuaMinigameInstance extends MinigameInstance {
                         LuaChunk lc = adapter.convertChunk(c);
                         list.add(lc.getLuaValue());
                     }
-                    return LuaTable.listOf(list.toArray(new LuaValue[0]));
+                    return fromArray(list.toArray(new LuaValue[0]));
                 }));
                 return ret;
             }
@@ -105,12 +113,12 @@ public class LuaMinigameInstance extends MinigameInstance {
                 Iterator<Player> iter = players.iterator();
                 for (int i=0; i < size; i++) {
                     if (iter.hasNext()) {
-                        values[i] = adapter.convertPlayer(players.iterator().next()).getLuaValue();
+                        values[i] = adapter.convertPlayer(iter.next()).getLuaValue();
                     } else {
                         values[i] = LuaValue.NIL;
                     }
                 }
-                return LuaTable.listOf(values);
+                return fromArray(values);
             }
         });
         struct.set("Broadcast", new OneArgMetaFunction() {
