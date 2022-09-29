@@ -1,0 +1,14 @@
+name: XGame
+version: '${project.version}'
+main: codes.wasabi.xgame.XGame
+api-version: 1.13
+prefix: XG
+depend: [ XPlug ]
+softdepend: [ WorldEdit, FastAsyncWorldEdit ]
+authors: [ Wasabi_Thumbs ]
+description: LUA-based Minigame library targeting Spigot 1.8+
+website: https://wasabicodes.xyz/
+commands:
+  xgame:
+    description: XGame main command
+    aliases: [ xg ]
