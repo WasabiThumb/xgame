@@ -21,7 +21,7 @@ data folder (``/plugins/XGame``) as the definitive version.
 This plugin is designed mainly for use on small SMPs. All minigames happen in the same world in order to keep things running fast.
 The first few times a minigame is played will likely be slower than subsequent games as the world needs to be created and pregenerated.
 When the game ends, players are returned to where they were before the game started along with their previous inventory, health, etc.
-Players can leave the minigame by teleporting to a different world (this will eventually be a dedicated command) or by relogging.
+Players can leave the minigame early by teleporting to a different world (this will eventually be a dedicated command) or by relogging.
 
 ## Commands
 | Name | Description | Permission |
