@@ -112,13 +112,23 @@ function MG:OnDamage()
     return false
 end
 
+function MG:RecordDeath(uuid)
+    local idx = 1
+    local size = (#self.Deaths)
+    while (idx <= size) do
+        if (self.Deaths[idx] == uuid) then return end
+        idx = idx + 1
+    end
+    self.Deaths[idx] = uuid
+end
+
 function MG:OnDeath(ply)
     if (not self.Started) then return true end
     local players = self:GetPlayers()
     local place = ((#players) - (#self.Deaths))
     local suffix = "rd"
     local thenEnd = false
-    table.insert(self.Deaths, ply:GetUUID())
+    self:RecordDeath(self.Deaths, ply:GetUUID())
     if (place == 2) then
         suffix = "nd"
         thenEnd = true
@@ -139,7 +149,7 @@ function MG:OnDeath(ply)
         end
         for _,p in pairs(self:GetPlayers()) do
             if (not (map[p:GetUUID()])) then
-                table.insert(self.Deaths, ply:GetUUID())
+                self:RecordDeath(self.Deaths, p:GetUUID())
                 timer.Simple(0, function()
                     self:EndRoutine()
                 end )
